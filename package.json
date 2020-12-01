@@ -1,0 +1,11 @@
+{
+  "name": "advent-of-code-2020",
+  "version": "1.0.0",
+  "private": true,
+  "repository": "https://github.com/cascandaliato/Advent-of-Code-2020.git",
+  "author": "Carmelo Scandaliato <carmelo.scandaliato@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^2.2.1"
+  }
+}
