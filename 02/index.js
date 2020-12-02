@@ -23,8 +23,7 @@ console.log('Part One: ', countValid());
 const countOfficiallyValid = () =>
   passwords.filter(
     ({ password, letter, min: left, max: right }) =>
-      (password[left - 1] === letter && password[right - 1] !== letter) ||
-      (password[left - 1] !== letter && password[right - 1] === letter)
+      (password[left - 1] === letter) !== (password[right - 1] === letter)
   ).length;
 
 console.log('Part Two: ', countOfficiallyValid());
