@@ -12,5 +12,9 @@
   },
   "dependencies": {
     "lodash": "^4.17.20"
+  },
+  "scripts": {
+    "solve": "nodemon",
+    "test": "jest --watch"
   }
 }
