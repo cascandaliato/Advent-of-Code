@@ -1,0 +1,21 @@
+tasks:
+  - init: yarn && ls -d */ | grep -oP "\d\d" | printf "%02d" $(expr $(tail -n 1) + 1) > next && cp -r template "$(< next)" && gp sync-done install
+    command: yarn test "$(< next)"
+    name: test
+  - init: gp sync-await install
+    command: yarn solve "$(< next)"
+    name: solve
+    openMode: split-right
+
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    addCheck: true
+    addComment: true
+    addBadge: false
+
+vscode:
+  extensions:
+    - esbenp.prettier-vscode@5.8.0:ZYZPKhQWgwL819tHuvpssw==
