@@ -11,7 +11,7 @@ function findTwo(targetSum) {
   }
 }
 
-console.log('Part One: ', findTwo(2020));
+console.log('Part One:', findTwo(2020));
 
 function findThree(targetSum) {
   for (const n of numbers) {
@@ -21,4 +21,4 @@ function findThree(targetSum) {
   }
 }
 
-console.log('Part Two: ', findThree(2020));
+console.log('Part Two:', findThree(2020));
