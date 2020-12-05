@@ -18,7 +18,7 @@ const countValid = () =>
     return counter.get(letter) >= min && counter.get(letter) <= max;
   }).length;
 
-console.log('Part One: ', countValid());
+console.log('Part One:', countValid());
 
 const countOfficiallyValid = () =>
   passwords.filter(
@@ -26,4 +26,4 @@ const countOfficiallyValid = () =>
       (password[left - 1] === letter) !== (password[right - 1] === letter)
   ).length;
 
-console.log('Part Two: ', countOfficiallyValid());
+console.log('Part Two:', countOfficiallyValid());
