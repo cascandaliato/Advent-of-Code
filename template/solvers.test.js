@@ -10,6 +10,10 @@ tests('Part One', flow(parse, solveOne), [
     input: file('example.txt'),
     expectedOutput: undefined,
   },
+  {
+    input: [''],
+    expectedOutput: undefined,
+  },
 ]);
 
 tests('Part Two', flow(parse, solveTwo), [
