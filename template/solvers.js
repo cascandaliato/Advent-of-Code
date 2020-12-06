@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const { splitByBlankLine } = require('../utils');
 
 exports.parse = lines => lines;
 
