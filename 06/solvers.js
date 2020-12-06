@@ -1,23 +1,9 @@
+const { flow, intersection, spread, sum, union } = require('lodash');
+const { get, map } = require('lodash/fp');
 const { splitByBlankLine } = require('../utils');
 
-exports.parse = lines =>
-  splitByBlankLine(lines).map(group => group.map(line => new Set(line)));
+exports.parse = flow(splitByBlankLine, map(map(line => [...line])));
 
-exports.solveOne = answers =>
-  answers
-    .map(group =>
-      group.reduce((union, person) => new Set([...union, ...person]), new Set())
-    )
-    .map(union => union.size)
-    .reduce((a, b) => a + b);
+exports.solveOne = flow(map(spread(union)), map(get('length')), sum);
 
-exports.solveTwo = answers =>
-  answers
-    .map(group =>
-      group.reduce(
-        (intersection, person) =>
-          new Set([...intersection].filter(answer => person.has(answer)))
-      )
-    )
-    .map(intersection => intersection.size)
-    .reduce((a, b) => a + b);
+exports.solveTwo = flow(map(spread(intersection)), map(get('length')), sum);
