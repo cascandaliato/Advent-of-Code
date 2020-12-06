@@ -1,6 +1,6 @@
 const _ = require('lodash');
 
-exports.parse = lines => {};
+exports.parse = lines => lines;
 
 exports.solveOne = input => {};
 
