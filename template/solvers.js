@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const { splitByBlankLine } = require('../utils');
 
-exports.parse = lines => lines;
+exports.normalizeInput = lines => lines;
 
 exports.solveOne = input => {};
 
