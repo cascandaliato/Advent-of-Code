@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-exports.readFileLines = path => fs.readFileSync(path).toString().split('\r\n');
+exports.readFileLines = path => fs.readFileSync(path).toString().split('\n');
 
 exports.splitByBlankLine = lines =>
   lines
