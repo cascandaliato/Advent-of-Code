@@ -1,4 +1,4 @@
-exports.parse = lines => {
+exports.normalizeInput = lines => {
   const passports = [];
 
   let passport = {};

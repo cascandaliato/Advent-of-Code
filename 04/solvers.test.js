@@ -1,22 +1,24 @@
 const path = require('path');
 const { flow } = require('lodash');
 const { readFileLines, tests } = require('../utils');
-const { solveOne, solveTwo, parse } = require('./solvers');
+const { normalizeInput, solveOne, solveTwo } = require('./solvers');
 
-tests('Part One', flow(parse, solveOne), [
+const file = fileName => readFileLines(path.join(__dirname, fileName));
+
+tests('Part One', flow(normalizeInput, solveOne), [
   {
-    input: readFileLines(path.join(__dirname, 'example-one.txt')),
+    input: file('example-p1.txt'),
     expectedOutput: 2,
   },
 ]);
 
-tests('Part Two', flow(parse, solveTwo), [
+tests('Part Two', flow(normalizeInput, solveTwo), [
   {
-    input: readFileLines(path.join(__dirname, 'example-two-invalid.txt')),
+    input: file('example-p2-invalid.txt'),
     expectedOutput: 0,
   },
   {
-    input: readFileLines(path.join(__dirname, 'example-two-valid.txt')),
+    input: file('example-p2-valid.txt'),
     expectedOutput: 4,
   },
 ]);
