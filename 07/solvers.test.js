@@ -7,18 +7,18 @@ const file = fileName => readFileLines(path.join(__dirname, fileName));
 
 tests('Part One', flow(normalizeInput, solveOne), [
   {
-    input: file('example-one.txt'),
+    input: file('example-p1.txt'),
     expectedOutput: 4,
   },
 ]);
 
 tests('Part Two', flow(normalizeInput, solveTwo), [
   {
-    input: file('example-one.txt'),
+    input: file('example-p1.txt'),
     expectedOutput: 32,
   },
   {
-    input: file('example-two.txt'),
+    input: file('example-p2.txt'),
     expectedOutput: 126,
   },
 ]);
