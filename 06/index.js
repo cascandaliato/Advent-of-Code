@@ -1,9 +1,9 @@
 const path = require('path');
 const { readFileLines } = require('../utils');
-const { parse, solveOne, solveTwo } = require('./solvers');
+const { normalizeInput, solveOne, solveTwo } = require('./solvers');
 
 const lines = readFileLines(path.join(__dirname, 'input.txt'));
 
-console.log('Part One:', solveOne(parse(lines)));
+console.log('Part One:', solveOne(normalizeInput(lines)));
 
-console.log('Part Two:', solveTwo(parse(lines)));
+console.log('Part Two:', solveTwo(normalizeInput(lines)));

@@ -2,7 +2,7 @@ const { flow, intersection, spread, sum, union } = require('lodash');
 const { get, map } = require('lodash/fp');
 const { splitByBlankLine } = require('../utils');
 
-exports.parse = flow(splitByBlankLine, map(map(line => [...line])));
+exports.normalizeInput = flow(splitByBlankLine, map(map(line => [...line])));
 
 exports.solveOne = flow(map(spread(union)), map(get('length')), sum);
 
