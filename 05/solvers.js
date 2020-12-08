@@ -1,6 +1,6 @@
 const { flow, range } = require('lodash');
 
-exports.parse = lines =>
+exports.normalizeInput = lines =>
   new Set(
     lines.map(
       flow(replaceZeroOnes('F', 'B'), replaceZeroOnes('L', 'R'), b =>
