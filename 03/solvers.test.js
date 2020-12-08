@@ -1,11 +1,20 @@
+const path = require('path');
 const { flow } = require('lodash');
 const { readFileLines, tests } = require('../utils');
-const { parse, solveOne, solveTwo } = require('./solvers');
+const { normalizeInput, solveOne, solveTwo } = require('./solvers');
 
-tests('Part One', flow(parse, solveOne), [
-  { input: readFileLines('03/example.txt'), expectedOutput: 7 },
+const file = fileName => readFileLines(path.join(__dirname, fileName));
+
+tests('Part One', flow(normalizeInput, solveOne), [
+  {
+    input: file('example.txt'),
+    expectedOutput: 7,
+  },
 ]);
 
-tests('Part Two', flow(parse, solveTwo), [
-  { input: readFileLines('03/example.txt'), expectedOutput: 336 },
+tests('Part Two', flow(normalizeInput, solveTwo), [
+  {
+    input: file('example.txt'),
+    expectedOutput: 336,
+  },
 ]);

@@ -1,4 +1,4 @@
-exports.parse = lines => lines.map(l => [...l]);
+exports.normalizeInput = lines => lines.map(l => [...l]);
 
 const downTheSlope = (right, down) => input => {
   const cols = input[0].length;
