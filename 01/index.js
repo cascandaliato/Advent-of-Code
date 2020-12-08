@@ -1,24 +1,17 @@
-const fs = require('fs');
-const input = fs.readFileSync('input.txt').toString().split('\r\n');
+const path = require('path');
+const { readFileLines } = require('../utils');
+const { normalizeInput, solveOne, solveTwo } = require('./solvers');
 
-const numbers = new Set(input.map(Number));
+const lines = readFileLines(path.join(__dirname, 'input.txt'));
 
-function findTwo(targetSum) {
-  for (const n of numbers) {
-    if (numbers.has(targetSum - n)) {
-      return n * (targetSum - n);
-    }
-  }
+try {
+  console.log('Part One:', solveOne(normalizeInput(lines)));
+} catch (e) {
+  console.log(e);
 }
 
-console.log('Part One:', findTwo(2020));
-
-function findThree(targetSum) {
-  for (const n of numbers) {
-    if (findTwo(targetSum - n)) {
-      return n * findTwo(targetSum - n);
-    }
-  }
+try {
+  console.log('Part Two:', solveTwo(normalizeInput(lines)));
+} catch (e) {
+  console.log(e);
 }
-
-console.log('Part Two:', findThree(2020));
