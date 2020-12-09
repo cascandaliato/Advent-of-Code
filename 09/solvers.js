@@ -18,22 +18,22 @@ exports.solveOne = (numbers, preamble = PREAMBLE) => {
 exports.solveTwo = (numbers, preamble = PREAMBLE) => {
   const target = exports.solveOne(numbers, preamble);
 
-  let lo = 0;
-  let hi = 2;
+  let l = 0;
+  let r = 2;
   let sum = numbers[0] + numbers[1];
 
   while (sum !== target) {
     if (sum > target) {
-      sum -= numbers[lo];
-      lo++;
+      sum -= numbers[l];
+      l++;
     }
-    if (sum < target || hi - lo === 1) {
-      sum += numbers[hi];
-      hi++;
+    if (sum < target || r - l === 1) {
+      sum += numbers[r];
+      r++;
     }
   }
   return (
-    numbers.slice(lo, hi).reduce((a, b) => Math.min(a, b)) +
-    numbers.slice(lo, hi).reduce((a, b) => Math.max(a, b))
+    numbers.slice(l, r).reduce((a, b) => Math.min(a, b)) +
+    numbers.slice(l, r).reduce((a, b) => Math.max(a, b))
   );
 };
