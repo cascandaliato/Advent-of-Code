@@ -19,25 +19,19 @@ exports.tests = (suite, fn, tests) => {
   });
 };
 
-exports.Counter = class Counter extends Map {
-  constructor(iter = []) {
-    super();
-    for (const key of iter) {
-      this.increment(key);
-    }
-  }
+// fn = continuation => args => {}
+// and args must be JSON-serializable
+exports.memoizeRecursive = (fn, baseCase) => {
+  const memo = new Map();
+  if (baseCase) memo.set(JSON.stringify([baseCase.in]), baseCase.out);
 
-  increment(key) {
-    if (this.has(key)) {
-      this.set(key, this.get(key) + 1);
-    } else {
-      this.set(key, 1);
-    }
-  }
+  const memoized = (...args) => {
+    const key = JSON.stringify(args);
+    if (!memo.has(key)) memo.set(key, fn(memoized)(...args));
+    return memo.get(key);
+  };
 
-  decrement(key) {
-    if (!this.has(key)) throw new Error(`Invalid key ${key}`);
-    this.set(key, this.get(key) - 1);
-    if (this.get(key) === 0) this.delete(key);
-  }
+  return memoized;
 };
+
+exports.memoize = fn => exports.memoizeRecursive(() => fn);
