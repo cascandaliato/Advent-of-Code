@@ -1,21 +1,48 @@
 const fs = require('fs');
 const path = require('path');
-const boxen = require('boxen');
 const chalk = require('chalk');
 const concurrently = require('concurrently');
 const { cp, mkdir } = require('shelljs');
 
 const USAGE = `Usage
-  $ solve yyyy d[d]`;
+  $ solve yyyy d
+where
+  2015 <= yyyy <= ${new Date().getFullYear()}
+  1 <= d <= 25
+`;
 
-let year, day;
-try {
-  if (process.argv.length != 4) {
+const validate = (y, d) => {
+  if (
+    !/^\d{4}$/.test(y) ||
+    Number(y) < 2015 ||
+    Number(y) > new Date().getFullYear() ||
+    !/^\d{2}$/.test(d) ||
+    Number(d) > 25
+  )
     throw new Error();
+};
+
+let year = new Date().getFullYear().toString();
+let day = new Date().getDate().toString();
+
+try {
+  switch (process.argv.length) {
+    case 2:
+      break;
+    case 3:
+      // past year
+      if (year !== process.argv[2]) day = '01';
+      year = process.argv[2];
+      break;
+    case 4:
+      [year, day] = process.argv.slice(2);
+      break;
+    default:
+      throw new Error();
   }
 
-  [year, day] = process.argv.slice(2).map(arg => arg.padStart(2, '0'));
-  if (!/^\d{4}$/.test(year) || !/^\d{2}$/.test(day)) throw new Error();
+  day = day.padStart(2, '0');
+  validate(year, day);
 } catch (_) {
   console.log(USAGE);
   return -1;

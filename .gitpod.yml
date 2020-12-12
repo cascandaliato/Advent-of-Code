@@ -1,11 +1,7 @@
 tasks:
-  - init: yarn && ls -d */ | grep -oP "\d\d" | printf "%02d" $(expr $(tail -n 1) + 1) > next && cp -r template "$(< next)" && gp sync-done install
-    command: yarn test "$(< next)"
-    name: test
-  - init: gp sync-await install
-    command: gp open $(< next)/solvers.js && gp open $(< next)/solvers.test.js && gp open $(< next)/input.txt && yarn solve "$(< next)"
+  - init: yarn
+    command: yarn solve
     name: solve
-    openMode: split-right
 
 github:
   prebuilds:
