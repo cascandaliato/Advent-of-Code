@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { flow, range } = require('lodash');
 
 exports.readFileLines = path => fs.readFileSync(path).toString().split('\n');
 
@@ -37,3 +38,9 @@ exports.memoizeRecursive = (fn, baseCase) => {
 exports.memoize = fn => exports.memoizeRecursive(() => fn);
 
 exports.mod = (n, mod) => ((n % mod) + mod) % mod;
+
+const rotate = dir => ([px, py]) => [dir * py, -dir * px];
+exports.rotateCW = rotate(1);
+exports.rotateCCW = rotate(-1);
+
+exports.repeatFn = (fn, times) => flow(...range(times).fill(fn));
