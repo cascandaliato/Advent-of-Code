@@ -35,3 +35,5 @@ exports.memoizeRecursive = (fn, baseCase) => {
 };
 
 exports.memoize = fn => exports.memoizeRecursive(() => fn);
+
+exports.mod = (n, mod) => ((n % mod) + mod) % mod;
