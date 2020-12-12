@@ -13,8 +13,8 @@ exports.tests = (suite, fn, tests) => {
   describe(suite, () => {
     let id = 0;
     tests.forEach(({ input, expectedOutput }) => {
-      test(`#${++id}`, () => {
-        expect(fn(input)).toBe(expectedOutput);
+      test(`#${++id}`, async () => {
+        expect(await fn(input)).toBe(expectedOutput);
       });
     });
   });

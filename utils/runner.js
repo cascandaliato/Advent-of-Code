@@ -3,13 +3,13 @@ const chalk = require('chalk');
 const { upperFirst } = require('lodash');
 const { readFileLines } = require('.');
 
-module.exports = (inputPath, normalizeInput, solveOne, solveTwo) => {
+module.exports = async (inputPath, normalizeInput, solveOne, solveTwo) => {
   const lines = readFileLines(inputPath);
 
-  const exec = (func, label) => {
+  const exec = async (func, label) => {
     try {
       const before = Date.now();
-      const answer = func(normalizeInput(lines));
+      const answer = await func(normalizeInput(lines));
       const after = Date.now();
       console.log(
         boxen(
@@ -23,7 +23,6 @@ module.exports = (inputPath, normalizeInput, solveOne, solveTwo) => {
       console.log(e);
     }
   };
-
   exec(solveOne, 'one');
   exec(solveTwo, 'two');
 };
