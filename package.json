@@ -6,16 +6,20 @@
   "author": "Carmelo Scandaliato <carmelo.scandaliato@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "chalk": "^4.1.0",
+    "concurrently": "^5.3.0",
     "jest": "^26.6.3",
     "nodemon": "^2.0.6",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "shelljs": "^0.8.4"
   },
   "dependencies": {
     "lodash": "^4.17.20",
     "mnemonist": "^0.38.1"
   },
   "scripts": {
-    "solve": "nodemon",
+    "main": "nodemon -e '*'",
+    "solve": "node solve.js",
     "test": "jest --watch"
   }
 }

@@ -8,17 +8,13 @@ const file = fileName => readFileLines(path.join(__dirname, fileName));
 tests('Part One', flow(normalizeInput, solveOne), [
   {
     input: file('example.txt'),
-    expectedOutput: undefined,
-  },
-  {
-    input: [''],
-    expectedOutput: undefined,
+    expectedOutput: 37,
   },
 ]);
 
 tests('Part Two', flow(normalizeInput, solveTwo), [
   {
     input: file('example.txt'),
-    expectedOutput: undefined,
+    expectedOutput: 26,
   },
 ]);
