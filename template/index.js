@@ -1,6 +1,6 @@
 const path = require('path');
 const { upperFirst } = require('lodash');
-const { readFileLines } = require('../utils');
+const { readFileLines } = require('../../utils');
 const { normalizeInput, solveOne, solveTwo } = require('./solvers');
 
 const lines = readFileLines(path.join(__dirname, 'input.txt'));

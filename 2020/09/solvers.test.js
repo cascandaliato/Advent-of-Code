@@ -5,20 +5,18 @@ const { normalizeInput, solveOne, solveTwo } = require('./solvers');
 
 const file = fileName => readFileLines(path.join(__dirname, fileName));
 
-tests('Part One', flow(normalizeInput, solveOne), [
+const PREAMBLE = 5;
+
+tests('Part One', input => solveOne(normalizeInput(input), PREAMBLE), [
   {
     input: file('example.txt'),
-    expectedOutput: undefined,
-  },
-  {
-    input: [''],
-    expectedOutput: undefined,
+    expectedOutput: 127,
   },
 ]);
 
-tests('Part Two', flow(normalizeInput, solveTwo), [
+tests('Part Two', input => solveTwo(normalizeInput(input), PREAMBLE), [
   {
     input: file('example.txt'),
-    expectedOutput: undefined,
+    expectedOutput: 62,
   },
 ]);
