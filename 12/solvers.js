@@ -1,13 +1,10 @@
+const { rotateCW: rCW, rotateCCW: rCCW, repeatFn } = require('../utils');
+
 exports.normalizeInput = lines =>
   lines.map(line => ({ action: line[0], value: Number(line.slice(1)) }));
 
-const rotate = dir => (px, py, val) =>
-  Array(val / 90)
-    .fill(0)
-    .reduce(([a, b]) => [dir * b, -dir * a], [px, py]);
-
-const rotateCW = rotate(1);
-const rotateCCW = rotate(-1);
+const rotateCW = (px, py, val) => repeatFn(rCW, val / 90)([px, py]);
+const rotateCCW = (px, py, val) => repeatFn(rCCW, val / 90)([px, py]);
 
 const navigate = (navigationSystem, initialState) => instructions => {
   const { x, y } = instructions.reduce(
