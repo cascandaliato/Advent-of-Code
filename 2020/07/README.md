@@ -1,0 +1,3 @@
+- [Problem](https://adventofcode.com/2020/day/7)
+- [Solutions](solvers.js)
+- [Tests](solvers.test.js)
