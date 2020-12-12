@@ -15,50 +15,49 @@ const navigate = (navigationSystem, initialState) => instructions => {
 };
 
 const navigationPartOne = {
-  N: ({ x, y, dx, dy }, val) => ({ x, y: y + val, dx, dy }),
-  S: ({ x, y, dx, dy }, val) => ({ x, y: y - val, dx, dy }),
-  E: ({ x, y, dx, dy }, val) => ({ x: x + val, y, dx, dy }),
-  W: ({ x, y, dx, dy }, val) => ({ x: x - val, y, dx, dy }),
-  L: ({ x, y, dx, dy }, val) => ({
-    x,
-    y,
-    dx: rotateCCW(dx, dy, val)[0],
-    dy: rotateCCW(dx, dy, val)[1],
+  N: (state, val) => ({ ...state, y: state.y + val }),
+  S: (state, val) => ({ ...state, y: state.y - val }),
+  E: (state, val) => ({ ...state, x: state.x + val }),
+  W: (state, val) => ({ ...state, x: state.x - val }),
+  L: (state, val) => ({
+    ...state,
+    dx: rotateCCW(state.dx, state.dy, val)[0],
+    dy: rotateCCW(state.dx, state.dy, val)[1],
   }),
-  R: ({ x, y, dx, dy }, val) => ({
-    x,
-    y,
-    dx: rotateCW(dx, dy, val)[0],
-    dy: rotateCW(dx, dy, val)[1],
+  R: (state, val) => ({
+    ...state,
+    dx: rotateCW(state.dx, state.dy, val)[0],
+    dy: rotateCW(state.dx, state.dy, val)[1],
   }),
-  F: ({ x, y, dx, dy }, val) => ({
-    x: x + val * dx,
-    y: y + val * dy,
-    dx,
-    dy,
+  F: (state, val) => ({
+    ...state,
+    x: state.x + val * state.dx,
+    y: state.y + val * state.dy,
   }),
 };
 
 exports.solveOne = navigate(navigationPartOne, { x: 0, y: 0, dx: 1, dy: 0 });
 
 const navigationPartTwo = {
-  N: ({ x, y, wx, wy }, val) => ({ x, y, wx, wy: wy + val }),
-  S: ({ x, y, wx, wy }, val) => ({ x, y, wx, wy: wy - val }),
-  E: ({ x, y, wx, wy }, val) => ({ x, y, wx: wx + val, wy }),
-  W: ({ x, y, wx, wy }, val) => ({ x, y, wx: wx - val, wy }),
-  L: ({ x, y, wx, wy }, val) => ({
-    x,
-    y,
-    wx: rotateCCW(wx, wy, val)[0],
-    wy: rotateCCW(wx, wy, val)[1],
+  N: (state, val) => ({ ...state, wy: state.wy + val }),
+  S: (state, val) => ({ ...state, wy: state.wy - val }),
+  E: (state, val) => ({ ...state, wx: state.wx + val }),
+  W: (state, val) => ({ ...state, wx: state.wx - val }),
+  L: (state, val) => ({
+    ...state,
+    wx: rotateCCW(state.wx, state.wy, val)[0],
+    wy: rotateCCW(state.wx, state.wy, val)[1],
   }),
-  R: ({ x, y, wx, wy }, val) => ({
-    x,
-    y,
-    wx: rotateCW(wx, wy, val)[0],
-    wy: rotateCW(wx, wy, val)[1],
+  R: (state, val) => ({
+    ...state,
+    wx: rotateCW(state.wx, state.wy, val)[0],
+    wy: rotateCW(state.wx, state.wy, val)[1],
   }),
-  F: ({ x, y, wx, wy }, val) => ({ x: x + val * wx, y: y + val * wy, wx, wy }),
+  F: (state, val) => ({
+    ...state,
+    x: state.x + val * state.wx,
+    y: state.y + val * state.wy,
+  }),
 };
 
 exports.solveTwo = navigate(navigationPartTwo, { x: 0, y: 0, wx: 10, wy: 1 });
