@@ -45,7 +45,7 @@ exports.rotateCCW = rotate(-1);
 
 exports.repeatFn = (fn, times) => flow(...range(times).fill(fn));
 
-const mulInv = (a, b) => {
+const modInv = (a, b) => {
   const b0 = b;
   let x0 = 0;
   let x1 = 1;
@@ -63,8 +63,8 @@ exports.chineseRemainder = (moduli, remainders) => {
   let sum = 0;
   const product = moduli.reduce((a, b) => a * b);
   for (const [modulus, remainder] of zip(moduli, remainders)) {
-    const p = Math.floor(product / modulus);
-    sum += remainder * mulInv(p, modulus) * p;
+    const p = product / modulus;
+    sum += remainder * modInv(p, modulus) * p;
   }
   return sum % product;
 };
