@@ -45,20 +45,32 @@ exports.rotateCCW = rotate(-1);
 
 exports.repeatFn = (fn, times) => flow(...range(times).fill(fn));
 
-const modInv = (a, b) => {
-  const b0 = b;
-  let x0 = 0;
-  let x1 = 1;
-  if (b === 1) return 1;
-  while (a > 1) {
-    const q = Math.floor(a / b);
-    [a, b] = [b, a % b];
-    [x0, x1] = [x1 - q * x0, x0];
+// https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm#Pseudocode
+exports.extendedEuclidean = (a, b) => {
+  let [prevR, r] = [a, b];
+  let [prevS, s] = [1, 0];
+  let [prevT, t] = [0, 1];
+  while (r !== 0) {
+    const q = Math.floor(prevR / r);
+    [prevR, r] = [r, prevR - q * r];
+    [prevS, s] = [s, prevS - q * s];
+    [prevT, t] = [t, prevT - q * t];
   }
-  if (x1 < 0) x1 += b0;
-  return x1;
+  return [prevS, prevT, prevR];
 };
 
+exports.gcd = (...numbers) => {
+  if (numbers.length === 2) {
+    return exports.extendedEuclidean(...numbers)[2];
+  } else {
+    return exports.gcd(numbers[0], exports.gcd(...numbers.slice(1)));
+  }
+};
+
+// https://en.wikipedia.org/wiki/Modular_multiplicative_inverse#Computation
+const modInv = (a, b) => exports.mod(exports.extendedEuclidean(a, b)[0], b);
+
+// https://rosettacode.org/wiki/Chinese_remainder_theorem
 exports.chineseRemainder = (moduli, remainders) => {
   let sum = 0;
   const product = moduli.reduce((a, b) => a * b);
