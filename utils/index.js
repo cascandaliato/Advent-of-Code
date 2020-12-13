@@ -67,7 +67,7 @@ exports.gcd = (...numbers) => {
   }
 };
 
-// https://en.wikipedia.org/wiki/Modular_multiplicative_inverse#Computation
+// https://en.wikipedia.org/wiki/Modular_multiplicative_inverse#Extended_Euclidean_algorithm
 const modInv = (a, b) => exports.mod(exports.extendedEuclidean(a, b)[0], b);
 
 // https://rosettacode.org/wiki/Chinese_remainder_theorem
