@@ -71,7 +71,7 @@ exports.solveTwo = ops => {
         newAddresses = [];
       }
       for (const address of addresses) {
-        map.set(parseInt(address, 2), value);
+        map.set(address, value);
       }
     }
   });
