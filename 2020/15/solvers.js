@@ -10,6 +10,7 @@ const speakNth = n => startingNumbers => {
     lastSpokenAt[last] = round - 1;
     last = speak;
   }
+
   return last;
 };
 
