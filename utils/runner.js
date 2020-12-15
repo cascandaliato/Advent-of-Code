@@ -23,6 +23,6 @@ module.exports = async (inputPath, normalizeInput, solveOne, solveTwo) => {
       console.log(e);
     }
   };
-  exec(solveOne, 'one');
-  exec(solveTwo, 'two');
+  await exec(solveOne, 'one');
+  await exec(solveTwo, 'two');
 };
