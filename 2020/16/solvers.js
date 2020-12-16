@@ -39,14 +39,14 @@ exports.solveTwo = ({ rules, ownTicket, nearbyTickets }) => {
 
   const fields = Array.from({ length: rules.length }, () => []);
 
-  for (let i = 0; i < rules.length; i++) {
-    for (const rule of rules) {
+  for (let i = 0; i < fields.length; i++) {
+    for (const { field, ranges } of rules) {
       if (
         validTickets.every(ticket =>
-          rule.ranges.some(([l, r]) => ticket[i] >= l && ticket[i] <= r)
+          ranges.some(([l, r]) => ticket[i] >= l && ticket[i] <= r)
         )
       ) {
-        fields[i].push(rule.field);
+        fields[i].push(field);
       }
     }
   }
