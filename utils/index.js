@@ -80,3 +80,19 @@ exports.chineseRemainder = (moduli, remainders) => {
   }
   return sum % product;
 };
+
+exports.combos = (elements, times) =>
+  times === 1
+    ? elements.map(e => [e])
+    : elements.flatMap(e =>
+        exports.combos(elements, times - 1).map(c => [e, ...c])
+      );
+
+exports.multiRange = boundaries =>
+  boundaries.length === 1
+    ? range(boundaries[0][0], boundaries[0][1] + 1).map(v => [v])
+    : exports
+        .multiRange(boundaries.slice(1))
+        .flatMap(mr =>
+          range(boundaries[0][0], boundaries[0][1] + 1).map(v => [v, ...mr])
+        );
