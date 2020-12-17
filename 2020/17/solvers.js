@@ -1,5 +1,5 @@
 const { combos } = require('../../utils');
-const Grid = require('../../utils/sparse-hyper-grid');
+const HyperCube = require('../../utils/hyper-cube');
 
 const status = { '#': 1, '.': 0 };
 
@@ -12,45 +12,65 @@ const directions = dimensions =>
 const withNeighbors = (grid, deltas) =>
   [
     ...new Set([
-      ...[...grid].map(coords => coords.slice(0, -1).join(',')),
-      ...[...grid]
-        .flatMap(coords =>
+      ...[...grid.entries()].map(([coords]) => coords.join(',')),
+      ...[...grid.entries()]
+        .flatMap(([coords]) =>
           deltas.map(delta => delta.map((d, idx) => d + coords[idx]))
         )
         .map(arr => arr.join(',')),
     ]),
-  ].map(str => str.split(',').map(Number));
+  ]
+    .map(str => str.split(',').map(Number))
+    .filter(coords =>
+      coords.every((coord, idx) => coord >= 0 && coord < grid.lengths[idx])
+    );
 
-const solve = dimensions => slice => {
-  let grid = new Grid({ defaultValue: 0 });
+const solve = ({ dimensions, generations }) => slice => {
+  let cube = new HyperCube({
+    lengths: [
+      slice[0].length + generations * 2,
+      slice.length + generations * 2,
+      ...Array(dimensions - 2).fill(1 + generations * 2),
+    ],
+    defaultValue: 0,
+  });
   slice.forEach((row, y) =>
-    row.forEach((v, x) => grid.set(x, y, ...Array(dimensions - 2).fill(0), v))
+    row.forEach((v, x) =>
+      cube.set(
+        x + generations,
+        y + generations,
+        ...Array(dimensions - 2).fill(generations),
+        v
+      )
+    )
   );
-  const deltas = directions(dimensions);
 
-  for (let cycle = 1; cycle <= 6; cycle++) {
-    const nextGrid = grid.clone();
-    withNeighbors(nextGrid, deltas).forEach(coords => {
+  const deltas = directions(dimensions);
+  for (let cycle = 1; cycle <= generations; cycle++) {
+    const nextCube = cube.clone();
+    withNeighbors(nextCube, deltas).forEach(coords => {
       const activeNeighbors = deltas
-        .map(delta => grid.get(...coords.map((c, idx) => c + delta[idx])))
+        .map(delta => coords.map((c, idx) => c + delta[idx]))
+        .filter(c => c.every((v, idx) => v >= 0 && v < cube.lengths[idx]))
+        .map(c => cube.get(...c))
         .reduce((a, b) => a + b);
 
       if (
-        grid.get(...coords) === 1 &&
+        cube.get(...coords) === 1 &&
         activeNeighbors !== 2 &&
         activeNeighbors !== 3
       ) {
-        nextGrid.set(...coords, 0);
-      } else if (grid.get(...coords) === 0 && activeNeighbors === 3) {
-        nextGrid.set(...coords, 1);
+        nextCube.set(...coords, 0);
+      } else if (cube.get(...coords) === 0 && activeNeighbors === 3) {
+        nextCube.set(...coords, 1);
       }
     });
-    grid = nextGrid;
+    cube = nextCube;
   }
 
-  return [...grid.clone()].length;
+  return cube.getPopulated().length;
 };
 
-exports.solveOne = solve(3);
+exports.solveOne = solve({ dimensions: 3, generations: 6 });
 
-exports.solveTwo = solve(4);
+exports.solveTwo = solve({ dimensions: 4, generations: 6 });
