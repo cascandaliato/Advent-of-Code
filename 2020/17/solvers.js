@@ -1,5 +1,5 @@
 const { combos } = require('../../utils');
-const Grid = require('../../utils/sparse-hyper-matrix');
+const Grid = require('../../utils/sparse-hyper-grid');
 
 const status = { '#': 1, '.': 0 };
 
