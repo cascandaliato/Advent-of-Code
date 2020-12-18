@@ -14,6 +14,8 @@
     "shelljs": "^0.8.4"
   },
   "dependencies": {
+    "axios": "^0.21.0",
+    "expression-eval": "^3.1.2",
     "lodash": "^4.17.20",
     "mnemonist": "^0.38.1"
   },
