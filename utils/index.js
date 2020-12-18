@@ -96,3 +96,85 @@ exports.multiRange = boundaries =>
         .flatMap(mr =>
           range(boundaries[0][0], boundaries[0][1] + 1).map(v => [v, ...mr])
         );
+
+// https://rosettacode.org/wiki/Parsing/Shunting-yard_algorithm#JavaScript
+// https://en.wikipedia.org/wiki/Shunting-yard_algorithm#The_algorithm_in_detail
+exports.infixToPostfix = (
+  infix,
+  precedence = { '^': 4, '*': 3, '/': 3, '+': 2, '-': 2 }
+) => {
+  infix = infix.replace(/\s+/g, '');
+
+  const ops = '-+/*^';
+  const associativity = {
+    '^': 'Right',
+    '*': 'Left',
+    '/': 'Left',
+    '+': 'Left',
+    '-': 'Left',
+  };
+
+  const operators = [];
+  const postfix = [];
+
+  let token;
+  let op1, op2;
+
+  for (let i = 0; i < infix.length; i++) {
+    token = infix[i];
+    if (token >= '0' && token <= '9') {
+      let j = i + 1;
+      while (infix[j] >= '0' && infix[j] <= '9') {
+        token += infix[j];
+        j++;
+      }
+      i = j - 1;
+      postfix.push(Number(token));
+    } else if (ops.indexOf(token) != -1) {
+      op1 = token;
+      op2 = operators[operators.length - 1];
+      while (
+        ops.indexOf(op2) != -1 &&
+        ((associativity[op1] == 'Left' && precedence[op1] <= precedence[op2]) ||
+          (associativity[op1] == 'Right' && precedence[op1] < precedence[op2]))
+      ) {
+        postfix.push(operators.pop());
+        op2 = operators[operators.length - 1];
+      }
+      operators.push(op1);
+    } else if (token == '(') {
+      operators.push(token);
+    } else if (token == ')') {
+      while (operators[operators.length - 1] != '(') {
+        postfix.push(operators.pop());
+      }
+      operators.pop();
+    }
+  }
+  postfix.push(...operators.reverse());
+  return postfix;
+};
+
+exports.evaluatePostfix = postfix => {
+  const input = [...postfix];
+
+  const ops = {
+    '+': (a, b) => a + b,
+    '-': (a, b) => a - b,
+    '*': (a, b) => a * b,
+    '/': (a, b) => a / b,
+    '^': (a, b) => a ^ b,
+  };
+
+  const operands = [];
+  while (input.length > 0) {
+    const token = input.shift();
+    if (token in ops) {
+      operands.push(ops[token](operands.pop(), operands.pop()));
+    } else {
+      operands.push(token);
+    }
+  }
+
+  return operands[0];
+};
