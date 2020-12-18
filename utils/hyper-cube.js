@@ -4,12 +4,11 @@ class HyperCube extends Array {
   constructor({ lengths = [1], defaultValue = undefined }) {
     super(lengths[0]);
 
-    this._defaultValue = defaultValue;
+    this.defaultValue = defaultValue;
     this._dimensions = lengths.length;
     this.lengths = lengths;
     this._populated = new Set();
 
-    // populate
     this.fill(defaultValue);
     if (this._dimensions > 1) {
       this.forEach(
@@ -25,7 +24,7 @@ class HyperCube extends Array {
   clone() {
     const newHyperCube = new HyperCube({
       lengths: this.lengths,
-      defaultValue: this._defaultValue,
+      defaultValue: this.defaultValue,
     });
     for (const [coords, value] of this.entries()) {
       newHyperCube._set(coords, value);
@@ -34,11 +33,6 @@ class HyperCube extends Array {
   }
 
   *[Symbol.iterator]() {
-    // if (this._dimensions === 1) {
-    //   for (let i = 0; i < this.length; i++) yield this[i];
-    // } else {
-    //   for (let i = 0; i < this.length; i++) yield* this[i];
-    // }
     for (const entry of this.getPopulated()) yield this._get(entry);
   }
 
@@ -61,7 +55,7 @@ class HyperCube extends Array {
   }
 
   _set(coords, value) {
-    if (value !== this._defaultValue) {
+    if (value !== this.defaultValue) {
       this._populated.add(coords.join(','));
     } else {
       this._populated.delete(coords.join(','));
@@ -94,17 +88,3 @@ class HyperCube extends Array {
 }
 
 module.exports = HyperCube;
-
-// const hc = new HyperCube({ lengths: [3, 4, 1], defaultValue: '.' });
-// hc.set(1, 2, 0, 3);
-// hc.set(1, 1, 0, 2);
-// hc.set(0, 1, 0, 3);
-// console.log(hc.get(0, 0, 0));
-// console.log(hc.get(1, 2, 0));
-// // console.log(hc);
-// for (const v of hc) console.log(v);
-// // console.log(hc.getPopulated());
-// const c = hc.clone();
-// c.set(1, 1, 0, 8);
-// c.prettyPrint();
-// console.log('fin');
