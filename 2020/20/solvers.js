@@ -17,10 +17,10 @@ const otherSide = {
 };
 
 const getSide = {
-  north: ({ image }) => parseInt(image[0].join(''), 2),
-  south: ({ image }) => parseInt(image[image.length - 1].join(''), 2),
-  east: ({ image }) => parseInt(getCol(image, image[0].length - 1).join(''), 2),
-  west: ({ image }) => parseInt(getCol(image, 0).join(''), 2),
+  north: ({ image }) => image[0].join(''),
+  south: ({ image }) => image[image.length - 1].join(''),
+  east: ({ image }) => getCol(image, image[0].length - 1).join(''),
+  west: ({ image }) => getCol(image, 0).join(''),
 };
 
 const baseTransforms = {
