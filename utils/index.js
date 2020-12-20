@@ -187,3 +187,17 @@ exports.memoize = fn => {
     return cache.get(key);
   };
 };
+
+exports.printMatrixWithMap = (map = {}) => (matrix, id = undefined) => {
+  console.log();
+  if (id) console.log(`[id=${id}]`);
+  for (const row of matrix) {
+    console.log(row.map(c => map[c] || c).join(''));
+  }
+  console.log();
+};
+
+exports.printMatrix = exports.printMatrixWithMap();
+
+exports.getCol = (matrix, idx) =>
+  matrix.reduce((col, row) => [...col, row[idx]], []);
