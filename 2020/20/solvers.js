@@ -195,16 +195,13 @@ exports.solveTwo = tiles => {
     dragon.map(([row]) => row).reduce((a, b) => Math.max(a, b)) + 1;
 
   const markDragons = m => {
-    let count = [];
     for (let rIdx = 0; rIdx + dragonH - 1 < m.length; rIdx++) {
       for (let cIdx = 0; cIdx + dragonW - 1 < m[0].length; cIdx++) {
         if (dragon.every(([dR, dC]) => m[rIdx + dR][cIdx + dC] >= 1)) {
           dragon.forEach(([dR, dC]) => (m[rIdx + dR][cIdx + dC] += 1));
-          count.push([rIdx, cIdx]);
         }
       }
     }
-    return count;
   };
 
   const countOctothorpes = m =>
