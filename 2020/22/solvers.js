@@ -21,23 +21,21 @@ exports.solveOne = ([deck1, deck2]) => {
   return deck1.length > 0 ? getScore(deck1) : getScore(deck2);
 };
 
-const playRecursiveCombat = (deck1, deck2) => {
-  const memo1 = new Set();
-  const memo2 = new Set();
+const playRecursiveCombat = (deck1, deck2, isSubGame = false) => {
+  const memo = new Set();
 
   while (deck1.length > 0 && deck2.length > 0) {
-    const state1 = deck1.toString();
-    const state2 = deck2.toString();
-    if (memo1.has(state1) || memo2.has(state2)) return 1;
-    memo1.add(state1);
-    memo2.add(state2);
+    const state = getScore(deck1) * getScore(deck2);
+    if (memo.has(state)) return 1;
+    memo.add(state);
 
     let turnWinner;
     const [card1, card2] = [deck1.pop(), deck2.pop()];
     if (deck1.length >= card1 && deck2.length >= card2) {
       turnWinner = playRecursiveCombat(
         deck1.slice(-card1),
-        deck2.slice(-card2)
+        deck2.slice(-card2),
+        true
       );
     } else {
       turnWinner = card1 > card2 ? 1 : 2;
