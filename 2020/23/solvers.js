@@ -1,3 +1,7 @@
+const { mod } = require('../../utils');
+
+exports.normalizeInput = lines => lines[0].split('').map(Number);
+
 class Node {
   constructor(value) {
     this.value = value;
@@ -8,35 +12,24 @@ class Node {
 }
 
 const buildLinks = cups => {
-  const maxCup = cups.reduce((a, b) => Math.max(a, b));
   const byValue = new Map(cups.map(cup => [cup, new Node(cup)]));
 
-  for (const [value, node] of byValue) {
-    const down = value - 1 || maxCup;
-    node.down = byValue.get(down);
-  }
+  for (const [value, node] of byValue)
+    node.down = byValue.get(value - 1 || cups.length);
 
-  cups.slice(1, -1).forEach((cup, idx) => {
-    byValue.get(cup).next = byValue.get(cups[idx + 1 + 1]);
-    byValue.get(cup).prev = byValue.get(cups[idx + 1 - 1]);
+  cups.forEach((cup, idx) => {
+    byValue.get(cup).next = byValue.get(cups[mod(idx + 1, cups.length)]);
+    byValue.get(cup).prev = byValue.get(cups[mod(idx - 1, cups.length)]);
   });
-
-  byValue.get(cups[0]).next = byValue.get(cups[1]);
-  byValue.get(cups[0]).prev = byValue.get(cups[cups.length - 1]);
-  byValue.get(cups[cups.length - 1]).next = byValue.get(cups[0]);
-  byValue.get(cups[cups.length - 1]).prev = byValue.get(cups[cups.length - 2]);
 
   return { current: byValue.get(cups[0]), one: byValue.get(1) };
 };
 
-exports.normalizeInput = lines =>
-  lines.map(line => line.split('').map(Number))[0];
-
-const playWithCupsAndMoves = (numCups, moves) => cups => {
+const play = (numCups, numMoves) => cups => {
   for (let cup = 10; cup <= numCups; cup++) cups.push(cup);
   let { current, one } = buildLinks(cups);
 
-  for (let move = 1; move <= moves; move++) {
+  for (let move = 1; move <= numMoves; move++) {
     const [p1, p2, p3] = [
       current.next,
       current.next.next,
@@ -61,7 +54,7 @@ const playWithCupsAndMoves = (numCups, moves) => cups => {
 };
 
 exports.solveOne = cups => {
-  const one = playWithCupsAndMoves(9, 100)(cups);
+  const one = play(9, 100)(cups);
 
   let node = one.next;
   const answer = [];
@@ -73,6 +66,6 @@ exports.solveOne = cups => {
 };
 
 exports.solveTwo = cups => {
-  const one = playWithCupsAndMoves(1e6, 1e7)(cups);
+  const one = play(1e6, 1e7)(cups);
   return one.next.value * one.next.next.value;
 };
