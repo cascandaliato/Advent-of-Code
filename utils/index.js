@@ -201,3 +201,15 @@ exports.printMatrix = exports.printMatrixWithMap();
 
 exports.getCol = (matrix, idx) =>
   matrix.reduce((col, row) => [...col, row[idx]], []);
+
+exports.permutations = function* (elements) {
+  if (elements.length === 1) yield elements;
+
+  for (const element of elements) {
+    for (const rest of exports.permutations(
+      elements.filter(e => e !== element)
+    )) {
+      yield [element, ...rest];
+    }
+  }
+};
