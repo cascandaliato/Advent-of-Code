@@ -6,7 +6,6 @@ class Node {
   constructor(value) {
     this.value = value;
     this.next = null;
-    this.prev = null;
     this.down = null;
   }
 }
@@ -19,7 +18,6 @@ const buildLinks = cups => {
 
   cups.forEach((cup, idx) => {
     byValue.get(cup).next = byValue.get(cups[mod(idx + 1, cups.length)]);
-    byValue.get(cup).prev = byValue.get(cups[mod(idx - 1, cups.length)]);
   });
 
   return { current: byValue.get(cups[0]), one: byValue.get(1) };
@@ -40,12 +38,9 @@ const play = (numCups, numMoves) => cups => {
       destination = destination.down;
 
     current.next = p3.next;
-    p3.next.prev = current;
 
     p3.next = destination.next;
-    destination.next.prev = p3;
     destination.next = p1;
-    p1.prev = destination;
 
     current = current.next;
   }
