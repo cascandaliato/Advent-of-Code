@@ -1,66 +1,51 @@
-const { mod } = require('../../utils');
-
 exports.normalizeInput = lines => lines[0].split('').map(Number);
 
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.next = null;
-    this.down = null;
+const play = (inputCups, numCups, numMoves) => {
+  const cups = new Uint32Array(numCups + 1).map((_, idx) => idx + 1);
+  for (let i = 0; i < inputCups.length; i++)
+    cups[inputCups[i]] = inputCups[(i + 1) % inputCups.length];
+
+  cups[0] = inputCups[0];
+
+  if (numCups > inputCups.length) {
+    cups[inputCups[inputCups.length - 1]] = inputCups.length + 1;
+    cups[cups.length - 1] = inputCups[0];
   }
-}
-
-const buildLinks = cups => {
-  const byValue = new Map(cups.map(cup => [cup, new Node(cup)]));
-
-  for (const [value, node] of byValue)
-    node.down = byValue.get(value - 1 || cups.length);
-
-  cups.forEach((cup, idx) => {
-    byValue.get(cup).next = byValue.get(cups[mod(idx + 1, cups.length)]);
-  });
-
-  return { current: byValue.get(cups[0]), one: byValue.get(1) };
-};
-
-const play = (numCups, numMoves) => cups => {
-  for (let cup = 10; cup <= numCups; cup++) cups.push(cup);
-  let { current, one } = buildLinks(cups);
 
   for (let move = 1; move <= numMoves; move++) {
     const [p1, p2, p3] = [
-      current.next,
-      current.next.next,
-      current.next.next.next,
+      cups[cups[0]],
+      cups[cups[cups[0]]],
+      cups[cups[cups[cups[0]]]],
     ];
-    let destination = current.down;
-    while ([p1.value, p2.value, p3.value].includes(destination.value))
-      destination = destination.down;
+    let destination = cups[0] - 1 || numCups;
+    while ([p1, p2, p3].includes(destination))
+      destination = destination - 1 || numCups;
 
-    current.next = p3.next;
+    cups[cups[0]] = cups[p3];
 
-    p3.next = destination.next;
-    destination.next = p1;
+    cups[p3] = cups[destination];
+    cups[destination] = p1;
 
-    current = current.next;
+    cups[0] = cups[cups[0]];
   }
 
-  return one;
+  return cups;
 };
 
-exports.solveOne = cups => {
-  const one = play(9, 100)(cups);
+exports.solveOne = inputCups => {
+  const cups = play(inputCups, 9, 100);
 
-  let node = one.next;
-  const answer = [];
-  while (node.value !== 1) {
-    answer.push(node.value);
-    node = node.next;
+  const ans = [];
+  let node = cups[1];
+  while (node !== 1) {
+    ans.push(node);
+    node = cups[node];
   }
-  return Number(answer.join(''));
+  return Number(ans.join(''));
 };
 
-exports.solveTwo = cups => {
-  const one = play(1e6, 1e7)(cups);
-  return one.next.value * one.next.next.value;
+exports.solveTwo = inputCups => {
+  const cups = play(inputCups, 1e6, 1e7);
+  return cups[1] * cups[cups[1]];
 };
