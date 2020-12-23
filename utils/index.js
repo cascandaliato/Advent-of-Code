@@ -213,3 +213,6 @@ exports.permutations = function* (elements) {
     }
   }
 };
+
+exports.composeN = (fn, n = 1) => (...args) =>
+  n === 1 ? fn(...args) : exports.composeN(fn, n - 1)(fn(...args));
