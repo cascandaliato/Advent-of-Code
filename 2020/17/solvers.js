@@ -53,7 +53,7 @@ const solve = ({ dimensions, generations }) => slice => {
     cube = nextCube;
   }
 
-  return cube.getPopulated().length;
+  return cube.size;
 };
 
 exports.solveOne = solve({ dimensions: 3, generations: 6 });
