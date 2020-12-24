@@ -25,6 +25,10 @@ class HyperMap {
       yield [key.split(';').map(Number), value];
     }
   }
+
+  get size() {
+    return this._map.size;
+  }
 }
 
 module.exports = HyperMap;

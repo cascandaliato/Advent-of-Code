@@ -12,7 +12,16 @@ class HyperSet {
   }
 
   remove(coords) {
-    this._set.remove(coords.join(';'));
+    this.delete(coords);
+  }
+
+  delete(coords) {
+    this._set.delete(coords.join(';'));
+  }
+
+  toggle(coords) {
+    if (this.has(coords)) this.delete(coords);
+    else this.add(coords);
   }
 
   *[Symbol.iterator]() {
@@ -20,8 +29,13 @@ class HyperSet {
       yield coords.split(';').map(Number);
     }
   }
-  getPopulated() {
+
+  toArray() {
     return [...this._set].map(coords => coords.split(';').map(Number));
+  }
+
+  get size() {
+    return this._set.size;
   }
 }
 
