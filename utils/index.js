@@ -214,5 +214,13 @@ exports.permutations = function* (elements) {
   }
 };
 
+exports.numberPartitions = function* (target, numParts) {
+  if (numParts === 1) yield [target];
+  else
+    for (let i = 0; i <= target; i++)
+      for (const rest of exports.numberPartitions(target - i, numParts - 1))
+        yield [i, ...rest];
+};
+
 exports.composeN = (fn, n = 1) => (...args) =>
   n === 1 ? fn(...args) : exports.composeN(fn, n - 1)(fn(...args));
