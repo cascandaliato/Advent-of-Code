@@ -224,3 +224,16 @@ exports.numberPartitions = function* (target, numParts) {
 
 exports.composeN = (fn, n = 1) => (...args) =>
   n === 1 ? fn(...args) : exports.composeN(fn, n - 1)(fn(...args));
+
+exports.toMatrix = lines => lines.map(line => line.split(''));
+
+exports.getDimensions = hypercube =>
+  Array.isArray(hypercube) ? 1 + exports.getDimensions(hypercube[0]) : 0;
+
+exports.getLengths = hypercube =>
+  exports.getDimensions(hypercube) === 1
+    ? [hypercube.length]
+    : [hypercube.length, ...exports.getLengths(hypercube[0])];
+
+exports.getDirections = (n = 2) =>
+  exports.combos([0, 1, -1], n).filter(combo => combo.some(v => v !== 0));
