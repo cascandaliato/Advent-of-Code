@@ -237,3 +237,24 @@ exports.getLengths = hypercube =>
 
 exports.getDirections = (n = 2) =>
   exports.combos([0, 1, -1], n).filter(combo => combo.some(v => v !== 0));
+
+exports.indicesOf = (searchStr, str, caseSensitive = true) => {
+  var searchStrLen = searchStr.length;
+  if (searchStrLen == 0) return [];
+
+  if (!caseSensitive) {
+    str = str.toLowerCase();
+    searchStr = searchStr.toLowerCase();
+  }
+
+  const indices = [];
+  let startIndex = 0;
+  let index;
+  while ((index = str.indexOf(searchStr, startIndex)) > -1) {
+    indices.push(index);
+    startIndex = index + searchStrLen;
+  }
+  return indices;
+};
+
+exports.numUpper = str => str.length - str.replace(/[A-Z]/g, '').length;
