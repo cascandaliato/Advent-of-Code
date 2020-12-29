@@ -21,7 +21,7 @@ exports.solveOne = ([deck1, deck2]) => {
   return deck1.length > 0 ? getScore(deck1) : getScore(deck2);
 };
 
-const playRecursiveCombat = (deck1, deck2, isSubGame = false) => {
+const playRecursiveCombat = (deck1, deck2) => {
   const memo = new Set();
 
   while (deck1.length > 0 && deck2.length > 0) {
@@ -34,8 +34,7 @@ const playRecursiveCombat = (deck1, deck2, isSubGame = false) => {
     if (deck1.length >= card1 && deck2.length >= card2) {
       turnWinner = playRecursiveCombat(
         deck1.slice(-card1),
-        deck2.slice(-card2),
-        true
+        deck2.slice(-card2)
       );
     } else {
       turnWinner = card1 > card2 ? 1 : 2;
