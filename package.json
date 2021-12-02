@@ -1,8 +1,8 @@
 {
-  "name": "advent-of-code-2020",
+  "name": "advent-of-code",
   "version": "1.0.0",
   "private": true,
-  "repository": "https://github.com/cascandaliato/Advent-of-Code-2020.git",
+  "repository": "https://github.com/cascandaliato/Advent-of-Code.git",
   "author": "Carmelo Scandaliato <carmelo.scandaliato@gmail.com>",
   "license": "MIT",
   "devDependencies": {
@@ -23,6 +23,7 @@
   "scripts": {
     "main": "nodemon -e '*'",
     "solve": "node solve.js",
+    "pysolve": "nodemon --watch './' -e '*' --exec 'python pysolve.py'",
     "test": "jest --watch"
   }
 }
