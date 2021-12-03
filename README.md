@@ -11,9 +11,7 @@
 
 My solutions to [Advent of Code](https://adventofcode.com/).
 
-The repository can be loaded and run in [Gitpod](https://gitpod.io/#https://github.com/cascandaliato/Advent-of-Code).
-
-#### Software Requirements
+#### Requirements
 - [Node.js](https://nodejs.org/)
 - [Yarn](https://yarnpkg.com/)
 - [Python](https://www.python.org/)
