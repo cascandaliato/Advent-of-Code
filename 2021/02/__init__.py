@@ -30,4 +30,4 @@ def solve1(input):
 @expect({'test': 900})
 def solve2(input):
     pos, dep, _ = template(input)
-    return pos*dep
+    return pos * dep
