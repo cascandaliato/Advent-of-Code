@@ -1,13 +1,20 @@
-from pyutils import download, input
 import os
+import shutil
 import sys
 
 from colorama import init, Fore, Style
 init()
 
+from pyutils import download, input
+
 year = sys.argv[1]
 day = str(sys.argv[2]).zfill(2)
-print(f'AoC.{Fore.LIGHTGREEN_EX}{year}{Style.RESET_ALL}.{Fore.LIGHTYELLOW_EX}{day}{Style.RESET_ALL}')
+
+day_folder = os.path.join(year, day)
+if not os.path.exists(day_folder):
+    os.makedirs(day_folder)
+    shutil.copy(os.path.join('template', '__init__.py'), os.path.join(day_folder, '__init__.py'))
+    open(os.path.join(day_folder, 'test.txt'), 'a').close()
 
 os.chdir(os.path.abspath(os.sep.join([year, day])))
 download(*sys.argv[1:])
@@ -39,6 +46,7 @@ def run(part):
 
 
 try:
+    print(f'AoC.{Fore.LIGHTGREEN_EX}{year}{Style.RESET_ALL}.{Fore.LIGHTYELLOW_EX}{day}{Style.RESET_ALL}')
     run(1)
     run(2)
 except AssertionError:
