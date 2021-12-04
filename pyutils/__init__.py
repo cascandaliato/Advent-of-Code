@@ -2,12 +2,11 @@ import os
 import requests
 
 from dotenv import load_dotenv
-from functools import wraps
 
 requests.packages.urllib3.disable_warnings()
 
 
-def input(filename='input.txt'):
+def puzzle_input(filename='input.txt'):
     return open(filename).read().splitlines()
 
 
@@ -36,3 +35,13 @@ def expect(expectations):
 
 def tokens(lines, *, sep=' ', map=lambda x: x):
     return (map(line.split(sep)) for line in lines)
+
+
+def split_by_empty_line(lines):
+    ans = [[]]
+    for line in lines:
+        if line:
+            ans[-1].append(line)
+        else:
+            ans.append([])
+    return ans

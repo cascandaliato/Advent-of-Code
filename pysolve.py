@@ -5,7 +5,7 @@ import sys
 from colorama import init, Fore, Style
 init()
 
-from pyutils import download, input
+from pyutils import download, puzzle_input
 
 year = sys.argv[1]
 day = str(sys.argv[2]).zfill(2)
@@ -34,7 +34,7 @@ def run(part):
             max_testname = max(len(testname)
                                for testname in solver.expectations.keys())
             for filename, expectation in sorted(solver.expectations.items()):
-                result = solver(parse(input(f'{filename}.txt')))
+                result = solver(parse(puzzle_input(f'{filename}.txt')))
                 if result == expectation:
                     print(
                         f'  {filename:<{max_testname+2}}{Fore.GREEN}PASS{Style.RESET_ALL}')
@@ -42,7 +42,7 @@ def run(part):
                     print(
                         f'  {filename:<{max_testname+2}}{Fore.RED}FAIL{Style.RESET_ALL}  (expected {expectation}, got {result})')
                     raise AssertionError()
-        print(f'  solution = {solver(parse(input()))}')
+        print(f'  solution = {solver(parse(puzzle_input()))}')
 
 
 try:
