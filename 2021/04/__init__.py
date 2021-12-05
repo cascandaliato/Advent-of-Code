@@ -28,14 +28,15 @@ def nth_winning_score(input, n):
 
     for d, draw in enumerate(draws):
         for board, row, col in n_to_position[draw]:
+            if board not in boards_playing:
+                continue
             countdown[board][BY_ROW][row] -= 1
             countdown[board][BY_COL][col] -= 1
             if countdown[board][BY_ROW][row] == 0 or countdown[board][BY_COL][col] == 0:
-                if board in boards_playing:
-                    boards_playing.remove(board)
-                    won_counter += 1
-                    if won_counter == n:
-                        return draw * sum(n for row in boards[board] for n in row if n not in set(draws[:d+1]))
+                boards_playing.remove(board)
+                won_counter += 1
+                if won_counter == n:
+                    return draw * sum(n for row in boards[board] for n in row if n not in set(draws[:d+1]))
 
 
 @expect({'test': 4512})
