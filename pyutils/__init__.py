@@ -22,8 +22,8 @@ def download(year, day):
         f.write(req.content.decode('utf-8'))
 
 
-def ints(lines):
-    return (int(line) for line in lines)
+def ints(nums):
+    return (int(num) for num in nums)
 
 
 def expect(expectations):
