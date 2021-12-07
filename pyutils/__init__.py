@@ -23,7 +23,7 @@ def download(year, day):
 
 
 def ints(nums):
-    return (int(num) for num in nums)
+    return list(int(num) for num in nums)
 
 
 def expect(expectations):
