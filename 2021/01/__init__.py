@@ -2,7 +2,7 @@ from pyutils import *
 
 
 def parse(lines):
-    return list(ints(lines))
+    return ints(lines)
 
 
 @expect({'test': 7})
