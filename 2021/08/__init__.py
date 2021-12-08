@@ -2,12 +2,12 @@ from pyutils import *
 
 
 def parse(lines):
-    return [tuple([set(p) for p in s.split()] for s in line.split(' | ')) for line in lines]
+    return [tuple([set(pattern) for pattern in patterns.split()] for patterns in line.split(' | ')) for line in lines]
 
 
 @expect({'test1': 26})
-def solve1(input):
-    return len([s for entry in input for s in entry[1] if len(s) in [2, 3, 4, 7]])
+def solve1(entries):
+    return len([pattern for _, output in entries for pattern in output if len(pattern) in [2, 3, 4, 7]])
 
 
 easy_criteria = [
@@ -41,9 +41,9 @@ def pattern_to_digit(pattern, segments):
 
 
 @expect({'test1': 61229, 'test2': 5353})
-def solve2(input):
+def solve2(entries):
     total = 0
-    for patterns, output in input:
+    for patterns, output in entries:
         segments, output_int = {}, 0
         identify(patterns, easy_criteria, segments)  # 1, 4, 7, 8
         for pattern in output:
