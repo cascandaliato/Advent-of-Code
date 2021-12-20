@@ -4,10 +4,6 @@ from math import ceil, floor, inf
 from pyutils import *
 
 
-def findidx(p, l):
-    return next(filter(lambda t: p(t[0], t[1]), enumerate(l)), (-1, None))[0]
-
-
 def parse(lines):
     return [transform(line) for line in lines]
 
@@ -37,7 +33,7 @@ def reduce(n):
 
 
 def explode(n):
-    idx = findidx(lambda i, _: n[i][1] == n[i+1][1] and n[i][1] > 4, n[:-1])
+    idx = findindex(lambda i, _: n[i][1] == n[i+1][1] and n[i][1] > 4, n[:-1])
     if idx == -1:
         return False
     if idx > 0:
@@ -49,7 +45,7 @@ def explode(n):
 
 
 def split(n):
-    idx = findidx(lambda _, ni: ni[0] >= 10, n)
+    idx = findindex(lambda _, ni: ni[0] >= 10, n)
     if idx == -1:
         return False
     n[idx:idx+1] = [[floor(n[idx][0]/2), n[idx][1]+1],
@@ -59,7 +55,7 @@ def split(n):
 
 def magnitude(n):
     while len(n) > 1:
-        idx = findidx(lambda i, _: n[i][1] == n[i+1][1], n[:-1])
+        idx = findindex(lambda i, _: n[i][1] == n[i+1][1], n[:-1])
         mag = 3*n[idx][0] + 2*n[idx+1][0]
         n = n[:idx] + [[mag, n[idx][1]-1]] + n[idx+2:]
     return n[0][0]
