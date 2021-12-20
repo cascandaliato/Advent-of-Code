@@ -45,3 +45,7 @@ def split_by_empty_line(lines):
         else:
             ans.append([])
     return ans
+
+
+def findindex(p, l):
+    return next(filter(lambda t: p(t[0], t[1]), enumerate(l)), (-1, None))[0]
