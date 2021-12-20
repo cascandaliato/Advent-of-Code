@@ -2,6 +2,7 @@ import os
 import requests
 
 from dotenv import load_dotenv
+from itertools import tee
 
 requests.packages.urllib3.disable_warnings()
 
@@ -49,3 +50,11 @@ def split_by_empty_line(lines):
 
 def findindex(p, l):
     return next(filter(lambda t: p(t[0], t[1]), enumerate(l)), (-1, None))[0]
+
+
+def pairwise(iterable):
+    """Polyfill for Python 3.8 (https://docs.python.org/3.8/library/itertools.html)."""
+    "s -> (s0,s1), (s1,s2), (s2, s3), ..."
+    a, b = tee(iterable)
+    next(b, None)
+    return zip(a, b)
