@@ -44,8 +44,9 @@ def run(part):
         if hasattr(solver, 'expectations'):
             max_testname = max(len(testname)
                                for testname in solver.expectations.keys())
-            for filename, expectation in sorted(solver.expectations.items()):
-                result = solver(parse(puzzle_input(f'{filename}.txt')))
+            for filename, expectation in solver.expectations.items():
+                result = solver(parse(puzzle_input(
+                    f'{filename}.txt') if filename.startswith('test') else [filename]))
                 if result == expectation:
                     print(
                         f'  {filename:<{max_testname+2}}{Fore.GREEN}PASS{Style.RESET_ALL}')
