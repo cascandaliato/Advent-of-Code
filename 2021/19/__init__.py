@@ -31,11 +31,11 @@ def match(s1, done, offsets):
     for i2 in done:
         s2 = offsets[i2][1]
         for s1r in rotations(s1):
-            deltas = Counter()
+            deltas = []
             for b1 in s1r:
                 for b2 in s2:
-                    deltas[tuple(a-b for a, b in zip(b1, b2))] += 1
-            delta, freq = deltas.most_common(1)[0]
+                    deltas.append((b1[0]-b2[0], b1[1]-b2[1], b1[2]-b2[2]))
+            delta, freq = Counter(deltas).most_common(1)[0]
             if freq >= 12:
                 return (i2, s1r, delta)
 
@@ -61,13 +61,11 @@ def solve1(scanners):
     offsets = calculate_offsets(scanners)
     all_beacons = set()
     for i in range(len(scanners)):
-        ref, beacons, delta = offsets[i]
-        beacons = set(tuple(b-d for b, d in zip(beacon, delta))
-                      for beacon in beacons)
+        ref, beacons, (dx, dy, dz) = offsets[i]
+        beacons = set((b[0]-dx, b[1]-dy, b[2]-dz) for b in beacons)
         while ref != 0:
-            ref, _, delta = offsets[ref]
-            beacons = set(tuple(b-d for b, d in zip(beacon, delta))
-                          for beacon in beacons)
+            ref, _, (dx, dy, dz) = offsets[ref]
+            beacons = set((b[0]-dx, b[1]-dy, b[2]-dz) for b in beacons)
         all_beacons = all_beacons.union(beacons)
     return len(all_beacons)
 
@@ -78,8 +76,8 @@ def solve2(scanners):
     for i in range(len(scanners)):
         ref, _, position = offsets[i]
         while ref != 0:
-            ref, _, delta = offsets[ref]
-            position = tuple(p+d for p, d in zip(position, delta))
+            ref, _, (dx, dy, dz) = offsets[ref]
+            position = (position[0]+dx, position[1]+dy, position[2]+dz)
         positions.append(position)
     for i in range(len(positions)):
         for j in range(i+1, len(positions)):
