@@ -24,6 +24,7 @@
     "main": "nodemon -e '*'",
     "solve": "node solve.js",
     "pysolve": "nodemon --watch './' -e '*' --exec 'python pysolve.py'",
+    "pysolveprof": "nodemon --watch './' -e '*' --ignore pyprofile --exec 'python -m cProfile -o pyprofile pysolve.py'",
     "test": "jest --watch"
   }
 }
