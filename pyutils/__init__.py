@@ -2,7 +2,7 @@ import os
 import requests
 
 from dotenv import load_dotenv
-from itertools import tee
+from itertools import product, tee
 
 requests.packages.urllib3.disable_warnings()
 
@@ -58,3 +58,7 @@ def pairwise(iterable):
     a, b = tee(iterable)
     next(b, None)
     return zip(a, b)
+
+
+def sparse(image, char='#'):
+    return set((c, r) for r, c in product(range(len(image)), repeat=2) if image[r][c] == char)
