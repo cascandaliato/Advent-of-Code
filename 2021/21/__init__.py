@@ -19,7 +19,7 @@ def solve1(starting_pos):
         pos[player] = (pos[player] + sum((rolls+i) %
                                          100 + 1 for i in range(3)) - 1) % 10 + 1
         scores[player] += pos[player]
-        player = -player+1
+        player = int(not player)
         rolls += 3
     return min(scores)*rolls
 
@@ -42,7 +42,7 @@ def solve2(starting_pos):
                 alt_pos, alt_scores = pos.copy(), scores.copy()
                 alt_pos[player] = (pos[player] + sum(rolls) - 1) % 10 + 1
                 alt_scores[player] += alt_pos[player]
-                next_games.append((alt_pos, alt_scores, -player+1))
+                next_games.append((alt_pos, alt_scores, int(not player)))
             if all(t(next_game) in outcomes for next_game in next_games):
                 outcomes[t(game)] = tuple(sum(t) for t in zip(
                     *[outcomes[t(next_game)] for next_game in next_games]))
