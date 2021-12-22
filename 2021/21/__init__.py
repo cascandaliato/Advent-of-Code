@@ -1,3 +1,4 @@
+from functools import lru_cache
 from itertools import product
 
 from pyutils import *
@@ -5,10 +6,6 @@ from pyutils import *
 
 def parse(lines):
     return [int(line.split(': ')[1]) for line in lines]
-
-
-def t(game):
-    return game[0][0], game[0][1], game[1][0], game[1][1], game[2]
 
 
 @expect({'test': 739785})
@@ -26,27 +23,18 @@ def solve1(starting_pos):
 
 @expect({'test': 444356092776315})
 def solve2(starting_pos):
-    initial_state = (starting_pos, [0, 0], 0)
-    games, outcomes = [initial_state], {}
-    while games:
-        game = games.pop()
-        if t(game) in outcomes:
-            continue
+    @lru_cache(maxsize=None)
+    def wins(pos1, pos2, score1, score2, player):
+        if max(score1, score2) >= 21:
+            return (1, 0) if score1 > score2 else (0, 1)
 
-        pos, scores, player = game
-        if max(scores) >= 21:
-            outcomes[t(game)] = (1, 0) if scores[0] > scores[1] else (0, 1)
-        else:
-            next_games = []
-            for rolls in product([1, 2, 3], repeat=3):
-                alt_pos, alt_scores = pos.copy(), scores.copy()
-                alt_pos[player] = (pos[player] + sum(rolls) - 1) % 10 + 1
-                alt_scores[player] += alt_pos[player]
-                next_games.append((alt_pos, alt_scores, int(not player)))
-            if all(t(next_game) in outcomes for next_game in next_games):
-                outcomes[t(game)] = tuple(sum(t) for t in zip(
-                    *[outcomes[t(next_game)] for next_game in next_games]))
-            else:
-                games.append(game)
-                games.extend(next_games)
-    return max(outcomes[t(initial_state)])
+        next_games = []
+        for rolls in product([1, 2, 3], repeat=3):
+            pos, scores = [pos1, pos2], [score1, score2]
+            pos[player] = (pos[player] + sum(rolls) - 1) % 10 + 1
+            scores[player] += pos[player]
+            next_games.append((*pos, *scores, int(not(player))))
+        return sum(wins(*next_game)[0] for next_game in next_games), \
+            sum(wins(*next_game)[1] for next_game in next_games)
+
+    return max(wins(*starting_pos, 0, 0, 0))
