@@ -1,0 +1,21 @@
+from pyutils import *
+
+
+def parse(lines):
+    ranges = []
+    for line in lines:
+        r1, r2 = line.split(',')
+        s1, e1 = ints(r1.split('-'))
+        s2, e2 = ints(r2.split('-'))
+        ranges.append((set(range(s1, e1+1)), set(range(s2, e2+1))))
+    return ranges
+
+
+@expect({'test': 2})
+def solve1(ranges):
+    return len(list(r1 for r1, r2 in ranges if r1.issubset(r2) or r2.issubset(r1)))
+
+
+@expect({'test': 4})
+def solve2(ranges):
+    return len(list(r1 for r1, r2 in ranges if r1.intersection(r2)))
