@@ -12,7 +12,7 @@ def puzzle_input(filename='input.txt'):
 
 
 def download(year, day):
-    load_dotenv()
+    load_dotenv(override=True)
     AOC_SESSION = os.getenv('AOC_SESSION')
     if os.path.exists('input.txt') or not AOC_SESSION:
         return
@@ -54,7 +54,7 @@ def findindex(p, l):
 
 def pairwise(iterable):
     """Polyfill for Python 3.8 (https://docs.python.org/3.8/library/itertools.html)."""
-    "s -> (s0,s1), (s1,s2), (s2, s3), ..."
+    "s -> (s0, s1), (s1, s2), (s2, s3), ..."
     a, b = tee(iterable)
     next(b, None)
     return zip(a, b)
