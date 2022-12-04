@@ -13,8 +13,8 @@ My solutions to [Advent of Code](https://adventofcode.com/). 🎄
 
 #### Requirements
 - [Node.js](https://nodejs.org/)
-- [Yarn](https://yarnpkg.com/)
 - [Python](https://www.python.org/)
+- [Yarn](https://yarnpkg.com/)
 - Christmas Spirit
 
 #### Once a Year
