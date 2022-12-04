@@ -9,17 +9,27 @@
   '~~~~~~~~~~~~~'     |/__\|/__\|/_______\|/__\|/__\|/__\|/__\|
 ```
 
-My solutions to [Advent of Code](https://adventofcode.com/).
+My solutions to [Advent of Code](https://adventofcode.com/). 🎄
 
 #### Requirements
 - [Node.js](https://nodejs.org/)
 - [Yarn](https://yarnpkg.com/)
 - [Python](https://www.python.org/)
+- Christmas Spirit
+
+#### Once a Year
+1. Log into [AoC website](https://adventofcode.com/).
+2. Extract the session id from the cookie.
+3. Save the session id in a file named `.env`, in the format
+    ```
+    AOC_SESSION=<aoc session id>
+    ```
+   or, if using GitHub Codespaces, update the `AOC_SESSION` secret [here](https://github.com/settings/codespaces/secrets/AOC_SESSION/edit).
 
 #### Years 2015 and 2020 (JavaScript)
-- Setup `yarn`
-- Run `yarn solve yyyy d`
+1. Setup `yarn`
+2. Run `yarn solve yyyy d`
 
-#### Year 2021 (Python)
-- Setup `pip install -r requirements.txt`
-- Run `yarn pysolve yyyy d`
+#### Years 2021 and 2022 (Python)
+1. Setup `python -m pip install -r requirements.txt`
+2. Run `yarn pysolve yyyy d`
