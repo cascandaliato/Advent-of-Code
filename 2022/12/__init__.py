@@ -1,3 +1,5 @@
+from collections import deque
+
 from pyutils import *
 
 
@@ -18,20 +20,18 @@ directions = [(+1, 0), (-1, 0), (0, +1), (0, -1)]
 
 
 def bfs(grid, start, is_end, can_move):
-    q, depth, visited = set([start]), 0, set()
-    while q:
-        nxt = set()
-        for row, col in q:
-            if (row, col) in visited:
-                continue
-            visited.add((row, col))
-            if is_end(row, col):
-                return depth
-            for drow, dcol in directions:
-                if 0 <= row+drow < len(grid) and 0 <= col+dcol < len(grid[0]) and can_move(grid[row][col], grid[row+drow][col+dcol]):
-                    nxt.add((row+drow, col+dcol))
-        q = nxt
-        depth += 1
+    queue, visited = deque([(start, 0)]), set()
+    while True:
+        coords, depth = queue.pop()
+        if coords in visited:
+            continue
+        visited.add(coords)
+        if is_end(*coords):
+            return depth
+        for drow, dcol in directions:
+            row, col = coords
+            if 0 <= row+drow < len(grid) and 0 <= col+dcol < len(grid[0]) and can_move(grid[row][col], grid[row+drow][col+dcol]):
+                queue.appendleft(((row+drow, col+dcol), depth+1))
 
 
 @expect({'test': 31})
