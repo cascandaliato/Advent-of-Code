@@ -30,6 +30,6 @@ My solutions to [Advent of Code](https://adventofcode.com/). 🎄
 1. Setup `yarn`
 2. Run `yarn solve yyyy d`
 
-#### Years 2021 and 2022 (Python)
+#### Years 2021+ (Python)
 1. Setup `python -m pip install -r requirements.txt`
 2. Run `yarn pysolve yyyy d`
