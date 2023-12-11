@@ -29,12 +29,12 @@ def solve(universe, multiplier):
                 )
         return distance
 
-    transpose = [[] for _ in range(len(universe[0]))]
+    transposed = [[] for _ in range(len(universe[0]))]
     for row in universe:
         for c, v in enumerate(row):
-            transpose[c].append(v)
+            transposed[c].append(v)
 
-    return h_distance(universe) + h_distance(transpose)
+    return h_distance(universe) + h_distance(transposed)
 
 
 @expect({"test": 374})
