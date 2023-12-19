@@ -1,4 +1,3 @@
-from collections import defaultdict
 from pyutils import *
 
 
@@ -29,14 +28,15 @@ def solve1(data):
         border += n
 
     # https://en.wikipedia.org/wiki/Shoelace_formula#Trapezoid_formula
-    trench.append(trench[0])
     area = 0
-    for i in range(len(trench) - 1):
-        area += (trench[i][1] + trench[i + 1][1]) * (trench[i][0] - trench[i + 1][0])
+    for i in range(len(trench)):
+        area += (trench[i][1] + trench[(i + 1) % len(trench)][1]) * (
+            trench[i][0] - trench[(i + 1) % len(trench)][0]
+        )
     area //= 2
 
     # https://en.wikipedia.org/wiki/Pick%27s_theorem
-    return border + abs(area) - border // 2 + 1
+    return abs(area) + border // 2 + 1
 
 
 @expect({"test": 952408144115})
