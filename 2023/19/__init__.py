@@ -70,17 +70,17 @@ def solve2(data):
     workflows, _ = data
     q, accepted = [("in", {k: range(1, 4001) for k in "xmas"})], 0
     while q:
-        name, ranges = q.pop()
-        if name == "A":
+        w, ranges = q.pop()
+        if w == "A":
             sub = 1
             for r in ranges.values():
                 sub *= len(r)
             accepted += sub
             continue
-        elif name == "R":
+        elif w == "R":
             continue
         else:
-            workflow = workflows[name]
+            workflow = workflows[w]
             for *condition, target in workflow[:-1]:
                 good, rest = intersect(ranges, condition)
                 q.append((target, good))
