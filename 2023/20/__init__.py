@@ -10,7 +10,7 @@ def broadcast(_, pulse, __, ___):
 
 
 def flipflop(_, pulse, state, __):
-    if pulse:
+    if pulse == HIGH:
         return None
 
     state["on"] = not state["on"]
@@ -20,7 +20,7 @@ def flipflop(_, pulse, state, __):
 def conjunction(source, pulse, state, inputs):
     state[source] = pulse
 
-    return LOW if all(state.get(input, False) for input in inputs) else HIGH
+    return LOW if all(state.get(input, LOW) == HIGH for input in inputs) else HIGH
 
 
 def noop(_, __, ___, ____):
@@ -29,8 +29,6 @@ def noop(_, __, ___, ____):
 
 def parse(lines):
     modules = defaultdict(lambda: defaultdict(list))
-    modules["output"]["op"] = noop
-    modules["output"]["state"] = None
     for line in lines:
         name, destinations = line.split(" -> ")
         if name == "broadcaster":
