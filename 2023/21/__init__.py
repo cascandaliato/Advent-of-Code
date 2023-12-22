@@ -8,7 +8,7 @@ def parse(grid):
                 return (r, c), grid
 
 
-def solve(data, n):
+def count(data, n):
     (start_r, start_c), grid = data
     q, visited = [(start_r, start_c)], dict()
     for i in range(n + 1):
@@ -24,12 +24,12 @@ def solve(data, n):
 
 
 def solve1(data):
-    return solve(data, 64)
+    return count(data, 64)
 
 
 def solve2(data):
     # https://en.wikipedia.org/wiki/Lagrange_polynomial#Definition
-    points = [(i, solve(data, 65 + i * 131)) for i in range(3)]
+    points = [(i, count(data, 65 + i * 131)) for i in range(3)]
     n = 202300  # (26501365 - 65) // 131
     return int(
         ((n - points[1][0]) * (n - points[2][0]))
