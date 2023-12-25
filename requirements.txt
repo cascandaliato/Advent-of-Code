@@ -1,4 +1,5 @@
 colorama
+networkx[default]
 python-dotenv
 requests
 sympy
