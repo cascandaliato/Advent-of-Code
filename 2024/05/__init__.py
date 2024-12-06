@@ -1,5 +1,5 @@
 from collections import defaultdict
-from graphlib import TopologicalSorter
+from functools import cmp_to_key
 
 from pyutils import *
 
@@ -48,9 +48,6 @@ def solve2(input):
     for update in updates:
         if is_correctly_ordered(update, rules):
             continue
-        update, g = set(update), {}
-        for n in update:
-            g[n] = rules.get(n, set()).intersection(update)
-        topo = list(TopologicalSorter(g).static_order())
-        res += int(topo[len(topo) // 2])
+        update.sort(key=cmp_to_key(lambda a, b: -1 if b in rules[a] else 1))
+        res += int(update[len(update) // 2])
     return res
