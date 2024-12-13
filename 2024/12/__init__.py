@@ -1,5 +1,3 @@
-from collections import deque
-
 from pyutils import *
 
 
@@ -16,7 +14,7 @@ def solve1(input):
             if (r0, c0) in visited:
                 continue
 
-            q, area, sides = deque([(r0, c0)]), 0, 0
+            q, area, sides = [(r0, c0)], 0, 0
             while q:
                 r, c = q.pop()
                 if (r, c) in visited:
@@ -30,7 +28,7 @@ def solve1(input):
                         and 0 <= c + dc < len(input[0])
                         and input[r + dr][c + dc] == input[r][c]
                     ):
-                        q.appendleft((r + dr, c + dc))
+                        q.append((r + dr, c + dc))
                     else:
                         sides += 1
             price += area * sides
@@ -47,7 +45,7 @@ def solve2(input):
             if (r0, c0) in visited:
                 continue
 
-            q, area, segments = deque([(r0, c0)]), 0, set()
+            q, area, segments = [(r0, c0)], 0, set()
             while q:
                 r, c = q.pop()
                 if (r, c) in visited:
@@ -61,7 +59,7 @@ def solve2(input):
                         and 0 <= c + dc < len(input[0])
                         and input[r + dr][c + dc] == input[r][c]
                     ):
-                        q.appendleft((r + dr, c + dc))
+                        q.append((r + dr, c + dc))
                     else:
                         segments.add(((r, c), (r + dr, c + dc)))
 
